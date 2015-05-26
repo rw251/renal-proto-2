@@ -189,17 +189,9 @@
       var index = 0;
       for (var o in file) {
         if (file[o].value >= file[o].normal.min && file[o].value <= file[o].normal.max) {
-          pb.normal.push({
-            name: o,
-            value: file[o].value,
-            units: file[o].units
-          });
+          pb.normal.push(file[o]);
         } else {
-          pb.abnormal.push({
-            name: o,
-            value: file[o].value,
-            units: file[o].units
-          });
+          pb.abnormal.push(file[0]);
         }
         file[o].name = o;
         file[o].chartid = "chart-" + index++;
