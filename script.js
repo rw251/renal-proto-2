@@ -138,14 +138,13 @@
     var template = $('#value-item').html();
     Mustache.parse(template);
 
-    $(".item-slot").each(function(index, value) {
-      if (index >= 10 || id * 10 + index >= pb.all.length) {
-        $(value).html("");
-      } else {
-        $(value).html(Mustache.render(template, pb.all[id * 10 + index]));
-        addRange(pb.all[id * 10 + index]);
+    $('#item-panel').html("");
+
+    for(var i = 0; i < 10; i++){
+      if (id * 10 + i < pb.all.length) {
+        $('#item-panel').append(Mustache.render(template, pb.all[id * 10 + i]))
       }
-    });
+    }
   };
 
   var page = function(id) {
