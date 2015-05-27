@@ -142,7 +142,8 @@
 
     for(var i = 0; i < 10; i++){
       if (id * 10 + i < pb.all.length) {
-        $('#item-panel').append(Mustache.render(template, pb.all[id * 10 + i]))
+        $('#item-panel').append(Mustache.render(template, pb.all[id * 10 + i]));
+        addRange(pb.all[id * 10 + i]);
       }
     }
   };
