@@ -73,6 +73,12 @@
     pb[item.chartid + '-chart'] = c3.generate(chartOptions);
   };
 
+  var getDateString = function(date){
+    var m = date.getMonth()+1;
+    var d = date.getDate();
+    return date.getFullYear() + "-" + (m<10 ? "0" : "")+m+"-"+(d<10 ? "0" : "")+d;
+  };
+
   var addChart = function(item) {
     destroyCharts([item + '-chart']);
 
@@ -87,6 +93,13 @@
       },
       zoom: {
         enabled: true
+      },
+      tooltip:{
+        format: {
+          title: function(x) {
+            return getDateString(x) + " - Source: " + pb.data[item].sources[getDateString(x)];
+          }
+        }
       },
       axis: {
         x: {
@@ -180,6 +193,43 @@
     });
   };
 
+  var getTrend = function(values, name){
+    var x = ["x"];
+    var vals = [name];
+
+    for(var i = 0; i < values.length; i++){
+      x.push(values[i].date);
+      vals.push(values[i].value);
+    }
+
+    return [x, vals];
+  };
+
+  var getSources = function(values){
+    var x = {};
+
+    for(var i = 0; i < values.length; i++){
+      x[values[i].date] = values[i].source;
+    }
+
+    return x;
+  };
+
+  var getProps = function(values){
+    var min = values[0].value;
+    var max = values[0].value;
+    var tot = 0;
+
+    for(var i = 1; i < values.length; i++){
+      tot += values[i].value;
+      if(values[i].value < min) min = values[i].value;
+      if(values[i].value > max) max = values[i].value;
+    }
+    var mean = Math.round(100 * tot / values.length) / 100;
+
+    return {"mean" : mean, "max" : max, "min" : min};
+  };
+
   pb.loadData = function(callback) {
     $.getJSON("data.json", function(file) {
       pb.data = file;
@@ -195,7 +245,13 @@
         }
         file[o].name = o;
         file[o].chartid = "chart-" + index++;
-        file[o].date = file[o].trend[0][file[o].trend[0].length - 1];
+        file[o].trend = getTrend(file[o].values, o);
+        file[o].date = file[o].trend[0][file[o].trend[0].length-1];
+        file[o].value = file[o].trend[1][file[o].trend[1].length-1];
+        file[o].source = file[o].values[file[o].values.length-1].source;
+        file[o].sources = getSources(file[o].values);
+        file[o].props = getProps(file[o].values);
+        file[o].inRange = (file[o].value >= file[o].normal.min && file[o].value <= file[o].normal.max ? "normal" : "abnormal");
         if (file[o].trend[1].length > 1) {
           file[o].change = Math.round((file[o].trend[1][file[o].trend[1].length - 1] - file[o].trend[1][file[o].trend[1].length - 2]) * 100) / 100;
         } else {

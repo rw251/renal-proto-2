@@ -109,11 +109,14 @@
         <h4 class="panel-title">{{name}}</h4>
       </div>
       <div class="panel-body">
-        <div class="blood-value">
+        <div class="blood-value blood-value-{{inRange}}">
           <span>{{value}}</span>
           <span class="blood-units">{{units}}</span>
         </div>
         <div id="{{chartid}}" class="range-chart">
+        </div>
+        <div class="blood-range">
+          Standard range: [{{normal.min}}, {{normal.max}}]
         </div>
         <div class="blood-source">
           Source: {{source}}
@@ -132,7 +135,7 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-sm-6 blood-value">
+          <div class="col-sm-6 blood-value blood-value-{{inRange}}">
             <span>{{value}}</span>
             <span class="blood-units">{{units}}</span>
             <i class="fa fa-arrow{{direction}} blood-change"></i>
@@ -146,9 +149,9 @@
           </div>
           <div class="col-sm-3">
             <div>[{{normal.min}}, {{normal.max}}]</div>
-            <div>{{axis.min}}</div>
-            <div>{{axis.max}}</div>
-            <div>{{mean}}</div>
+            <div>{{props.min}}</div>
+            <div>{{props.max}}</div>
+            <div>{{props.mean}}</div>
           </div>
         </div>
       </div>

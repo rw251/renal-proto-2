@@ -29,11 +29,19 @@ body{
 	color: rgb(47,131,226);
 }
 
+.blood-value-normal {
+	color: green;
+}
+
+.blood-value-abnormal {
+	color: red;
+}
+
 .blood-units {
 	font-size: 12px;
 }
 
-.blood-source, .blood-date{
+.blood-source, .blood-date, .blood-range{
 	font-size: 12px;
 }
 
@@ -47,9 +55,9 @@ body{
 }
 
 /* normal range */
-.c3-region.regionX {
+.c3-region.regionX rect{
 	fill:green;
-	fill-opacity: 0.5;
+	fill-opacity: 0.5 !important;
 }
 
 .c3-region.regionHigh, .c3-region.regionLow {
