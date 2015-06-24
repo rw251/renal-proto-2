@@ -128,6 +128,16 @@
         start: pb.data[item].normal.min,
         end: pb.data[item].normal.max,
         class: 'regionX'
+      },{/*OPTION1*/
+        axis: 'y',
+        start: pb.data[item].axis.min,
+        end: pb.data[item].normal.min,
+        class: 'regionY'
+      },{
+        axis: 'y',
+        start: pb.data[item].normal.max,
+        end: pb.data[item].axis.max,
+        class: 'regionY'
       }]
     };
 

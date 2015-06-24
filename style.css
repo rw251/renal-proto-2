@@ -40,6 +40,18 @@ body {
   font-size: 16px;
   color: #666;
 }
+
+/*OPTION2
+.c3-circle.warning{
+	fill: red !important;
+}*/
+
+/*OPTION1*/
+.c3-region.regionY rect {
+  fill: red;
+  fill-opacity: 0.3 !important;
+}
+
 #back-button {
   margin-bottom: 10px;
 }
